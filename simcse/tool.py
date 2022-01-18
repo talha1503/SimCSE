@@ -72,10 +72,11 @@ class SimCSE(object):
                 )
                 inputs = {k: v.to(target_device) for k, v in inputs.items()}
                 outputs = self.model(**inputs, return_dict=True)
+                
                 if self.pooler == "cls":
                     embeddings = outputs.pooler_output
                 elif self.pooler == "cls_before_pooler":
-                    embeddings = outputs.last_hidden_state[:, 0]
+                    embeddings = outputs.last_hidden_state
                 else:
                     raise NotImplementedError
                 if normalize_to_unit:
